@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+        <ui:composition template="./leftUpTemplate.xhtml">
+        <ui:define name="content">
+             <f:view>
+                <h:form>
+                    <h:outputLabel value="REgNr"/><h:inputText value="#{CarView.car.id}"/>
+                    <h:outputLabel value="brand"/><h:inputText value="#{CarView.car.brand}"/>   
+                    <h:outputLabel value="model"/><h:inputText value="#{CarView.car.model}"/>
+                    <h:outputLabel value="type"/>
+                    <h:selectOneMenu id="type" value="#{CarView.car.carType}" converter="#{carTypeConverter}">
+                        <f:selectItem itemLabel="Select One" itemValue=""/>
+                        <f:selectItems var="CarType" itemLabel="#{CarType.type}" value="#{CarTypeView.allTypes}" itemValue="#{CarType}"/>
+                    </h:selectOneMenu>
+                    
+                    <h:commandButton value="submit" action="#{CarView.postCar}"/>
+                </h:form>
+            </f:view>                    
+        </ui:define>
+
+        </ui:composition>
+    </body>
+</html>

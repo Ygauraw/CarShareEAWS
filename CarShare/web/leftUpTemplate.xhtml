@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="./resources/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+        <title>SmartCar Car Share in Bergen</title>
+    </h:head>
+
+    <h:body>
+        <div id="top" class="top">
+            <c:if test="${MemberView.member.firstname!=null}">
+            <ui:include src="userLogged.xhtml"/>
+            </c:if>
+            <c:if test="${MemberView.member.firstname==null}">
+             <ui:include src="userNotLogged.xhtml"/>
+            </c:if>
+        </div>
+        <div>
+            <div id="left" class="left_content">
+                <ui:include src="left.xhtml"/>
+            </div>
+            <div id="content" class="center_content">
+                <ui:insert name="content">
+                 Car Share is a non profit organization that owns a car pool in bergen.
+                 Car share members pay once a year a membership fee. In addition, they also have duties to keep the cars 
+                 tidy and safe. During this year, each member can borrow a car for free.we welcome new members.
+             </ui:insert>
+            </div>
+        </div>
+    </h:body>
+
+</html>

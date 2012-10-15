@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="./resources/css/default.css" rel="stylesheet" type="text/css" />
+    <link href="./resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+    <title>Facelets Template</title>
+</h:head>
+    
+<h:body>
+    <ui:composition template="./leftUpTemplate.xhtml">
+        <ui:define name="content">
+        <h:form>   
+            <h:outputFormat value="Hello, {0}!">
+                  <f:param value="#{MemberView.member.firstname}"/>
+            </h:outputFormat>
+            
+            <p:accordionPanel>  
+            <p:tab id="tab1" title="User Details">    
+                <h:panelGrid columns="2" cellpadding="2">  
+                    <h:outputText value="Name: " />  
+                    <h:inputText id="FirstName" value="#{MemberView.member.firstname}" style="font-weight: bold"/>  
+
+                    <h:outputText value="User Id: " />  
+                    <h:outputText id="id" value="#{MemberView.member.id}" style="font-weight: bold"/>  
+
+                    <h:outputText value="Street: " />  
+                    <h:inputText id="street" value="#{MemberView.member.address.street}" style="font-weight: bold"/>
+
+                    <h:outputText value="City: " />  
+                    <h:inputText id="city" value="#{MemberView.member.address.city}" style="font-weight: bold"/>  
+
+                    <h:commandButton type="update" value="Update"
+                    action="#{MemberView.updateUser}"></h:commandButton>            
+                </h:panelGrid>            
+            </p:tab>    
+            <p:tab id="tab2" title="Car Reservation">  
+                <p:dataTable value="#{ReservationView.reservations}" var="reservation" scrollHeight="300">  
+                <f:facet name="caption">  
+                    Registrations 
+                </f:facet> 
+                <p:column headerText="Reserved From" sortBy="#{reservation.dateFrom}">  
+                    #{reservation.dateFrom}}
+                </p:column>
+                <p:column headerText="Reserved To" sortBy="#{reservation.dateTo}">  
+                    #{reservation.dateTo}
+                </p:column> 
+                    <p:column headerText="Car" sortBy="#{reservation.car.id}">  
+                    #{reservation.car.id}  
+                </p:column>  
+                <p:column headerText="Member Id" sortBy="#{MemberView.member.id}">  
+                    #{MemberView.member.id}  
+                </p:column>  
+                    
+            </p:dataTable>  
+            </p:tab> 
+            </p:accordionPanel>  
+        </h:form>  
+        </ui:define>
+    </ui:composition>
+</h:body>
+
+</html>

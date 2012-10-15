@@ -1,0 +1,67 @@
+
+#top {
+    position: relative;
+    background-color: #f9c47f;
+    color: white;
+    padding: 5px;
+    margin: 0px 0px 10px 0px;
+}
+
+#bottom {
+    position: relative;
+    background-color: #fe9f1f;
+    padding: 5px;
+    margin: 10px 0px 0px 0px;
+}
+
+#left {
+    float: left;
+    background-image: url("/CarShare/images/design/hwn3.png");
+    padding: 5px;
+    height: 500px;
+    width: 150px;
+}
+#banco-form table{
+    width: 80%;
+    margin-left: 10px;
+}
+#right {
+    float: right;
+    background-color: #ece3a5;
+    height: 500px;
+    padding: 5px;
+    width: 250px;
+}
+
+.center_content {
+    position: relative;
+    padding: 15px;
+    margin-left: 170px;
+}
+
+.left_content {
+    padding: 5px;    
+}
+
+.right_content {
+    padding: 5px;    
+    margin: 0px 170px 0px 170px;
+}
+
+#top a:link, #top a:visited {
+  color: white;
+  font-weight : bold;
+  text-decoration: none;
+}
+
+#top a:link:hover, #top a:visited:hover  {
+  color: black;
+  font-weight : bold;
+  text-decoration : underline;
+}
+.noBorders tr, .noBorders td {
+    background: none !important;
+    border: none !important;
+}
+
+

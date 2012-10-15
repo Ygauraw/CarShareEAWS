@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      >
+
+    <body>      
+        
+        <h:form>  
+            <h:graphicImage value="/images/design/cslogo.png"/>
+            <h:commandButton value="Home" action="index.xhtml"/>            
+           
+            <h:commandButton value="My Page" action="#{MemberView.userExist}"/>
+            <h:commandButton value="Search for cars" action="carSearch.xhtml"/>
+             
+<!--        <h:button value="Contact"></h:button>
+            <h:commandButton value="User" action="memberReg.xhtml"/>    
+            <h:commandButton value="reg car" action="carReg.xhtml"/>
+            <h:commandButton value="reserv car" action="carReservation.xhtml"/>-->
+        </h:form>
+    </body>
+</html>

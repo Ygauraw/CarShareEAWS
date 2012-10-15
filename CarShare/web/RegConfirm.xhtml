@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="./resources/css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+        <title>Facelets Template</title>
+    </h:head>
+
+    <h:body>
+
+        <ui:composition template="./leftUpTemplate.xhtml">
+
+            <ui:define name="content">
+
+                <h:form>
+        <h:outputText value="Registration Confirmation" styleClass="header"></h:outputText>
+        <h:messages errorClass="errorMessage" infoClass="infoMessage" warnClass="warnMessage"></h:messages>
+        <h:panelGrid columns="2">
+    
+            <h:outputText value="Your User Id is:"></h:outputText><h:outputText value="#{MemberView.member.id}"></h:outputText>
+            
+            <h:outputText value="First name :"></h:outputText><h:outputText value="#{MemberView.member.firstname}"></h:outputText>
+
+            <h:outputText value="Last name :"></h:outputText><h:outputText value="#{MemberView.member.lastname}"></h:outputText>
+     
+            <h:outputText value="Password :"></h:outputText>
+            <h:outputText value="**************"></h:outputText>
+ 
+            <h:outputText value="Email :"></h:outputText>
+            <h:outputText value="#{MemberView.member.email}"></h:outputText>
+  
+            
+ 
+           
+
+        </h:panelGrid>
+<h:commandButton value="OK" action="Mypage"></h:commandButton>
+    </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+
+</html>

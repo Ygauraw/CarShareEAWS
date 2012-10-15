@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+        <ui:composition template="./leftUpTemplate.xhtml">
+            
+            <ui:define name="content">
+                
+                <f:view>                       
+                    <h:form id="banco-form"> 
+                          <f:facet name="msgHeader">  
+                            <h:messages for="reservationMsg" showDetail="true"/> 
+                        </f:facet>                      
+                        <p:panelGrid id="searchCriteria" columns="6" style="margin-top:20px" >
+                            <f:facet name="header">  
+                                Search by criteria 
+                            </f:facet>
+                            <h3>Reg nr:</h3><p:inputText id="caridcriteria" value="#{CarView.carId}"/>
+                            <h3>Brand:</h3><p:inputText id="brandcriteria" value="#{CarView.brand}"/>
+                            <h3>Model:</h3><p:inputText id="modelcriteria" value="#{CarView.model}"/>
+<!--                             <h3>Type:</h3>
+                           <p:selectOneMenu id="typecriteria" value="#{CarView.selectedtype}" converter="#{carTypeConverter}">
+                                <f:selectItem itemLabel="Select One" itemValue=""/>
+                                <f:selectItems var="CarType" itemLabel="#{CarType.type}" value="#{CarTypeView.allTypes}" itemValue="#{CarType}"/>
+                            </p:selectOneMenu>-->
+                            <h3>From: </h3><p:calendar id="fromDateSearch" showOn="button" value="#{CarView.fromDate}"/>
+                        <h3>To: </h3><p:calendar id="toDateSearch" showOn="button" value="#{CarView.toDate}"/>
+                        <f:facet name="footer"> 
+                            <p:commandButton action="#{CarView.findByCriteria}" value="Find cars" update=":banco-form:carTable"/>
+                            <p:commandButton action="#{CarView.getAllCars}" value="Find cars" update=":banco-form:carTable"/>
+                        </f:facet>
+                        </p:panelGrid>
+                        <p:dataTable value="#{CarView.result}" 
+                                     id="carTable"
+                                     var="car" selectionMode="single" 
+                                     rowKey="#{car.id}" selection="#{CarView.selectedCar}" 
+                                     paginator="true"  rowStyleClass="#{car.available ? 'old' : null}"
+                                     style="margin-top:20px">                             
+                            <p:column headerText="Reg nr" sortBy="#{car.id}" filterBy="#{car.id}" id="id">
+                                #{car.id}
+                            </p:column>
+                            <p:column headerText="Brand" sortBy="#{car.brand}" filterBy="#{car.brand}" id="brand">
+                                #{car.brand}
+                            </p:column>
+                            <p:column headerText="Model" sortBy="#{car.model}" filterBy="#{car.model}" id="model">
+                                #{car.model}
+                            </p:column>                            
+                            <p:column headerText="Type" sortBy="#{car.carType.type}" filterBy="#{car.carType.type}" id="type">
+                                #{car.carType.type}
+                            </p:column>
+                            
+                            <f:facet name="footer">  
+                                <p:commandButton id="detailsView" value="get details" icon="ui-icon-search" update=":banco-form:detailView"
+                                                 oncomplete="detailDialog.show()"/>
+                                <p:commandButton id="viewButton" value="Reserve" icon="ui-icon-clipboard"  
+                                        update=":banco-form:reserve" oncomplete="reserveDialog.show()"/>  
+                            </f:facet> 
+                        </p:dataTable>  
+                        <p:dialog id="detailView" header="Details" widgetVar="detailDialog" resizable="true"  
+                                width="500" showEffect="clip" hideEffect="fold">  
+                            <p:graphicImage value="/images/cars/#{CarView.selectedCar.id}.jpg"/> 
+                          <h:panelGrid id="detdisp" columns="2" cellpadding="1"> 
+                                    <h4>Reg nr:</h4>
+                                    <h:outputText value="#{CarView.selectedCar.id}" />                                  
+                                   
+                                    <h4>Model:</h4> 
+                                    <h:outputText value="#{CarView.selectedCar.model}" />  
+
+                                    <h4>Brand:</h4>
+                                    <h:outputText value="#{CarView.selectedCar.brand}" />  
+
+                                    <h4>Type:</h4>
+                                    <h:outputText value="#{CarView.selectedCar.carType.type}" /> 
+                                    
+                                    <h4>Available:</h4> 
+                                    <h:outputText value="#{CarView.selectedCar.available}" />
+                                    
+                                    <h4>Available date:</h4>
+                                    <h:outputText value="#{CarView.selectedCar.availableDate}" />
+                            </h:panelGrid>  
+                      </p:dialog>
+                        
+                        <p:dialog id="reserve" header="Reserve" widgetVar="reserveDialog" resizable="true"  
+                                width="500" showEffect="clip" hideEffect="fold">                             
+                          <h:panelGrid id="reserveDisplay" columns="2" cellpadding="4">                               
+                              <h3>User: </h3><h:outputText value="#{MemberView.member.firstname}"/>   
+                              <h3>Car:</h3><p:graphicImage value="/images/cars/#{CarView.selectedCar.id}.jpg"/>
+                              
+                              <h3>From: </h3><p:calendar id="fromDate" pattern="dd/MM/yyyy" showOn="button" 
+                                                         value="#{ReservationView.selected.dateFrom}" 
+                                                         mindate="#{ReservationView.minDate}"/>
+                              
+                              <h3>To: </h3><p:calendar id="toDate" pattern="dd/MM/yyyy" 
+                                                       showOn="button" value="#{ReservationView.selected.dateTo}"
+                                                       mindate="#{ReservationView.minDate}"/> 
+                              
+                              <h:commandButton action="#{ReservationView.create}" value="Reserve" />
+                              <h:commandButton action="#{ReservationView.clearDates}" value="Cancel"/>
+                          </h:panelGrid>  
+                      </p:dialog>
+                    </h:form>
+                </f:view>   
+            </ui:define>
+        </ui:composition>         
+    </body>
+</html>

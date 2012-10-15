@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <body>
+
+        <ui:composition template="./leftUpTemplate.xhtml">
+
+            <ui:define name="content">
+                <f:view>
+                <h:form>
+                    <h:panelGrid id="member" columns="2" cellpadding="4">
+                    <h:outputLabel value="Email"/><h:inputText value="#{MemberView.member.email}"/>
+                    <h:outputLabel value="Passord"/><h:inputSecret value="#{MemberView.member.password}"/>   
+                    <h:outputLabel value="First name"/><h:inputText value="#{MemberView.member.firstName}"/>
+                    <h:outputLabel value="Last Name"/><h:inputText value="#{MemberView.member.lastName}"/>
+                    <h:outputLabel value="Street"/><h:inputText value="#{MemberView.address.street}"/>
+                    <h:outputLabel value="Zip"/><h:inputText value="#{MemberView.address.zip}"/>
+                    <h:outputLabel value="City"/><h:inputText value="#{MemberView.address.city}"/>
+                    <h:commandButton value="submit" action="#{MemberView.postmember}"/>
+                    </h:panelGrid>
+                </h:form>
+                </f:view>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -4,7 +4,7 @@
  */
 package service;
 
-import boundry.ReservationFacade;
+import boundries.ReservationFacade;
 import entities.Member;
 import entities.Reservation;
 import java.util.List;
