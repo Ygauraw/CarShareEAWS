@@ -78,6 +78,9 @@ public class ReservationView {
         }
         return current;
     }
+    public void setSelected(Reservation reservation){
+        current = reservation;
+    }
 
     public Date getMinDate() {
         return minDate;

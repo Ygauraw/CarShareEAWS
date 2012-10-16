@@ -16,7 +16,7 @@
 <h:body>
     <ui:composition template="./leftUpTemplate.xhtml">
         <ui:define name="content">
-        <h:form>   
+            <h:form id="member-form">   
             <h:outputFormat value="Hello, {0}!">
                   <f:param value="#{MemberView.member.firstname}"/>
             </h:outputFormat>
@@ -41,7 +41,9 @@
                 </h:panelGrid>            
             </p:tab>    
             <p:tab id="tab2" title="Car Reservation">  
-                <p:dataTable value="#{ReservationView.reservations}" var="reservation" scrollHeight="300">  
+                <p:dataTable value="#{ReservationView.reservations}" var="reservation" scrollHeight="300"
+                             rowKey="#{reservation.id}" selection="#{ReservationView.selected}" 
+                             paginator="true"  rowStyleClass="#{reservation.car.available ? 'old' : null}">  
                 <f:facet name="caption">  
                     Registrations 
                 </f:facet> 
@@ -57,10 +59,31 @@
                 <p:column headerText="Member Id" sortBy="#{MemberView.member.id}">  
                     #{MemberView.member.id}  
                 </p:column>  
-                    
+                    <p:column headerText="reportDamage">
+                        <p:commandButton id="viewButton" value="Report damage" icon="ui-icon-clipboard"  
+                                         update=":member-form:report" oncomplete="reportDialog.show()">
+                            <f:setPropertyActionListener value="#{reservation}" target="#{ReservationView.selected}" />
+                        </p:commandButton> 
+                    </p:column>   
             </p:dataTable>  
+                
             </p:tab> 
             </p:accordionPanel>  
+            <p:dialog id="report" header="Report" widgetVar="reportDialog" resizable="true"  
+                            width="500" showEffect="clip" hideEffect="fold">                             
+                      <h:panelGrid id="reportDisplay" columns="2" cellpadding="4">                               
+                          <h3>User: </h3><h:outputText value="#{MemberView.member.firstname}"/>   
+                          <h3>Car:</h3><p:graphicImage value="/images/cars/#{ReservationView.selected.car.id}.jpg"/>
+                          <h3>Car regnr:</h3><h:outputText value="#{ReservationView.selected.car.id}"/>
+                          <h3>Date to:</h3> <h3>To: </h3><p:calendar id="toDate" pattern="dd/MM/yyyy" 
+                                                   showOn="button" value="#{ReservationView.selected.dateTo}"
+                                                   mindate="#{ReservationView.minDate}"/> 
+
+
+                          <h:commandButton action="#{ReservationView.create}" value="Report" />
+                          <h:commandButton action="#{ReservationView.clearDates}" value="Cancel"/>
+                      </h:panelGrid>  
+                  </p:dialog>
         </h:form>  
         </ui:define>
     </ui:composition>
