@@ -216,8 +216,8 @@ exists or setup the property manually. For example like this:
         </copy>
     </target>
     <target depends="init,deps-jar,pre-pre-compile,pre-compile" name="-do-compile-deps">
-        <copyfiles files="${reference.CarShareEAWS-war.dist-ear}" todir="${build.dir}//"/>
         <copyfiles files="${reference.CarShareEAWS-ejb.dist-ear}" todir="${build.dir}//"/>
+        <copyfiles files="${reference.CarShareEAWS-war.dist-ear}" todir="${build.dir}//"/>
         <copyfiles files="${reference.CarShareREST-war.dist-ear}" todir="${build.dir}//"/>
         <copyfiles files="${reference.CarShare.dist-ear}" todir="${build.dir}//"/>
     </target>

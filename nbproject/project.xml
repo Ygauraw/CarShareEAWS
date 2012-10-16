@@ -8,10 +8,6 @@
             <web-module-libraries/>
             <web-module-additional-libraries>
                 <library>
-                    <file>${reference.CarShare.dist-ear}</file>
-                    <path-in-war>/</path-in-war>
-                </library>
-                <library>
                     <file>${reference.CarShareEAWS-ejb.dist-ear}</file>
                     <path-in-war>/</path-in-war>
                 </library>
@@ -21,6 +17,10 @@
                 </library>
                 <library>
                     <file>${reference.CarShareREST-war.dist-ear}</file>
+                    <path-in-war>/</path-in-war>
+                </library>
+                <library>
+                    <file>${reference.CarShare.dist-ear}</file>
                     <path-in-war>/</path-in-war>
                 </library>
             </web-module-additional-libraries>
