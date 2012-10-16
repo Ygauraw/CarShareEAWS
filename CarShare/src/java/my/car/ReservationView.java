@@ -5,9 +5,12 @@
 package my.car;
 
 import boundry.ReservationFacade;
+import entities.Car;
+import entities.DamageReport;
 import entities.Reservation;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -32,14 +35,20 @@ public class ReservationView {
     private ReservationFacade reservationFacade;   
     
     //<editor-fold defaultstate="collapsed" desc="private members">    
-    private Reservation current;    
+    private Reservation current; 
+    private Reservation selectedForEdit;
     private List<Reservation> reservations;
+    private Date minDate = new Date();
     @ManagedProperty(value="#{MemberView}")
     private MemberView member;
     @ManagedProperty(value="#{CarView}")
     private CarView carview;
     
-    private Date minDate = new Date();
+    //<editor-fold defaultstate="collapsed" desc="damage report">    
+    @ManagedProperty(value="#{DamageReportView}")
+    private DamageReportView drView;    
+    //</editor-fold>
+    
     //</editor-fold>
     
     //<editor-fold defaultstate="collapsed" desc="setters and getters">
@@ -78,6 +87,7 @@ public class ReservationView {
         }
         return current;
     }
+    
     public void setSelected(Reservation reservation){
         current = reservation;
     }
@@ -89,6 +99,24 @@ public class ReservationView {
     public void setMinDate(Date minDate) {
         this.minDate = minDate;
     }
+
+    public DamageReportView getDrView() {
+        return drView;
+    }
+
+    public void setDrView(DamageReportView drView) {
+        this.drView = drView;
+    }     
+
+    public Reservation getSelectedForEdit() {
+        return selectedForEdit;
+    }
+
+    public void setSelectedForEdit(Reservation selectedForEdit) {
+        this.selectedForEdit = selectedForEdit;
+    }
+    
+    
     
     //</editor-fold>
     
@@ -138,9 +166,36 @@ public class ReservationView {
         }
     }
     
+    public void createDamageReport(){
+       DamageReport dr = getDrView().getCurrent();
+       dr.setMember_id(member.getMember());
+       dr.setCarid(this.current.getCar());
+       getDrView().create();
+       replaceDamagedCarOnReservations();
+       
+       
+    }
+    
+    private void replaceDamagedCarOnReservations(){
+        List<Reservation> toEdit = getFacade().findByCarAndToDate(current.getCar(), getDrView().getCurrent().getDateTo());
+        carview.getByType(current.getCar().getCarType());
+        Car replacment = carview.getResult().get(0);
+        
+        Iterator i = toEdit.iterator();
+        while(i.hasNext())
+        {
+            Reservation r = (Reservation)i.next();
+            r.setCar(replacment);            
+        }
+    }
+    
     public void clearDates(){
         current.setDateFrom(null);
         current.setDateTo(null);
+    }
+    
+    public void clearDamageReport(){
+        getDrView().setCurrent(new DamageReport());
     }
 
     public int getNumberOfReservations(){

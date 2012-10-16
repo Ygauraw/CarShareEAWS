@@ -60,6 +60,16 @@ public class CarFacade extends AbstractFacade<Car> {
         List<Car> res = q.getResultList();
         return res;        
     }
+    public List<Car> findByType(CarType type){
+        StringBuilder sb = new StringBuilder();
+        sb.append("select c from Car c ");
+        sb.append("where c.cartype = :type ");            
+        
+        Query q = em.createQuery(sb.toString());
+        q.setParameter("type", type);
+        List<Car> res = q.getResultList();
+        return res; 
+    }
 
     public List<Car> findByCriteria(String carId, String brand, String model, CarType type, Date from, Date to) {
         List<Car> res = null;

@@ -76,12 +76,15 @@
                           <h3>Car:</h3><p:graphicImage value="/images/cars/#{ReservationView.selected.car.id}.jpg"/>
                           <h3>Car regnr:</h3><h:outputText value="#{ReservationView.selected.car.id}"/>
                           <h3>Date to:</h3> <h3>To: </h3><p:calendar id="toDate" pattern="dd/MM/yyyy" 
-                                                   showOn="button" value="#{ReservationView.selected.dateTo}"
+                                                                     showOn="button" value="#{ReservationView.drView.current.dateTo}"
                                                    mindate="#{ReservationView.minDate}"/> 
+                          <h3>Or mark for permanent damage</h3><p:selectBooleanCheckbox value="#{ReservationView.drView.current.permDamage}" />  
+                          <h3>Text</h3><p:inputTextarea rows="5" cols="30"  value="#{ReservationView.drView.current.damageText}"/>
+                          
 
 
-                          <h:commandButton action="#{ReservationView.create}" value="Report" />
-                          <h:commandButton action="#{ReservationView.clearDates}" value="Cancel"/>
+                          <h:commandButton action="#{ReservationView.createDamageReport}" value="Report" />
+                          <h:commandButton action="#{ReservationView.clearDamageReport}" value="Cancel"/>
                       </h:panelGrid>  
                   </p:dialog>
         </h:form>  

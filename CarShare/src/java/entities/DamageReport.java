@@ -39,10 +39,11 @@ public class DamageReport implements Serializable {
     
     private boolean permDamage;
     
+    private String damageText;    
+    
     @JoinColumn(name = "car_carid", referencedColumnName = "carid")
     @ManyToOne
-    private Car carid;   
-    
+    private Car carid;       
     
     @NotNull(message="You are not logged in")
     @JoinColumn(name = "member_id", referencedColumnName = "id")
@@ -70,6 +71,14 @@ public class DamageReport implements Serializable {
 
     public boolean isPermDamage() {
         return permDamage;
+    }
+
+    public String getDamageText() {
+        return damageText;
+    }
+
+    public void setDamageText(String damageText) {
+        this.damageText = damageText;
     }
 
     public void setPermDamage(boolean permDamage) {

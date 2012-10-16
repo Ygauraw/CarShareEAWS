@@ -154,6 +154,11 @@ public class CarView {
     public void getAllCars(){
         this.result = this.carFacade.findAll();
     }
+    
+    public void getByType(CarType type){
+        this.result = this.carFacade.findByType(type);
+    }
+    
     public void onRowToggle(ToggleEvent event) {  
         FacesMessage msg;  
         msg = new FacesMessage(FacesMessage.SEVERITY_INFO,  

@@ -4,8 +4,10 @@
  */
 package boundry;
 
+import entities.Car;
 import entities.Member;
 import entities.Reservation;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -38,6 +40,19 @@ public class ReservationFacade extends AbstractFacade<Reservation> {
         
         Query q = em.createQuery(sb.toString());
         q.setParameter("memberid", member);
+        List<Reservation> res = q.getResultList();
+        return res;
+    }
+    
+    public List<Reservation> findByCarAndToDate(Car car, Date toDate){
+        StringBuilder sb = new StringBuilder();
+        sb.append("select r from Reservation r ");
+        sb.append("where r.car_carid = :carid ");       
+        sb.append("and (:toDate between r.dateFrom and r.dateTo ");
+        
+        Query q = em.createQuery(sb.toString());
+        q.setParameter("carid", car);
+        q.setParameter("toDate", toDate);
         List<Reservation> res = q.getResultList();
         return res;
     }
