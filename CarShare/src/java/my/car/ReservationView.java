@@ -23,6 +23,7 @@ import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import messages.Producer;
 
 /**
  *
@@ -174,7 +175,6 @@ public class ReservationView {
        dr.setMember_id(member.getMember());
        dr.setCarid(fakeOne);
        getDrView().create();
-       
        replaceDamagedCarOnReservations();       
        
     }
@@ -183,14 +183,20 @@ public class ReservationView {
         List<Reservation> toEdit = getFacade().findByCarAndToDate(fakeOne, getDrView().getCurrent().getDateTo());
         carview.getByTypeAndAvailable(fakeOne,getDrView().getCurrent().getDateTo());
         Car replacment = carview.getResult().get(0);
-        
+        List<String> messages = new ArrayList<String>();
         Iterator i = toEdit.iterator();
         while(i.hasNext())
-        {
-            
+        {            
             Reservation r = (Reservation)i.next();
-            reservationFacade.updateCar(r,replacment);           
+            reservationFacade.updateCar(r,replacment); 
+            messages.add("Damaged car reported: " + 
+                    getDrView().getCurrent().getCarid().getId() + 
+                    "Replacment car for member " + 
+                    r.getMember().getLastname() + 
+                    "is " + replacment.getId());            
         }
+        Producer producer = new Producer();
+        producer.producemessages(messages);
     }
     
     public void clearDates(){

@@ -57,7 +57,7 @@
             <h:outputText value="Zip Code :"></h:outputText>
             <h:inputText id="zip" value="#{MemberView.member.address.zip}" required="true"
                          requiredMessage="Please Enter Zip!" validatorMessage="Zipcode is invalid.">
-                <f:validateRegex pattern="/^\d{5}$/"/>
+                <f:validateRegex pattern="^\d{5}$"/>
             </h:inputText>
             
             <h:outputText value="City :"></h:outputText>
