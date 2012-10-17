@@ -32,14 +32,14 @@ public class CarFacade extends AbstractFacade<Car> {
     }
     public Car findCarById(String id){
         Query q = em.createNamedQuery("Car.findByCarid");
-        q.setParameter("id", id);
+        q.setParameter("carid", id);
         Car ret = (Car) q.getSingleResult();
         return ret;
     }
     
     public List<Car> findCarByIdList(String id){
         Query q = em.createNamedQuery("Car.findByCarid");
-        q.setParameter("id", id);
+        q.setParameter("carid", id);
         List<Car> ret = q.getResultList();
         return ret;
     }
@@ -63,7 +63,7 @@ public class CarFacade extends AbstractFacade<Car> {
     public List<Car> findByType(CarType type){
         StringBuilder sb = new StringBuilder();
         sb.append("select c from Car c ");
-        sb.append("where c.cartype = :type ");            
+        sb.append("where c.carType = :type ");            
         
         Query q = em.createQuery(sb.toString());
         q.setParameter("type", type);
@@ -147,6 +147,25 @@ public class CarFacade extends AbstractFacade<Car> {
             //TODO
             System.out.println("Error: " + e.getMessage());
         }
+        return res;
+    }
+
+    public List<Car> getByTypeAndAvailable(Car fakeOne, Date dateTo) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("select c from Car c ");
+        sb.append("where c.carid != :id "); 
+        sb.append("and c.carType = :type ");     
+        sb.append("and not exists ");
+        sb.append("(select r ");
+        sb.append("from Reservation r ");
+        sb.append("where r.carid = c ");
+        sb.append("and :to between r.dateFrom and r.dateTo) ");
+        
+        Query q = em.createQuery(sb.toString());
+        q.setParameter("type", fakeOne.getCarType());
+        q.setParameter("to", dateTo);
+        q.setParameter("id",fakeOne.getId());
+        List<Car> res = q.getResultList();
         return res;
     }
     

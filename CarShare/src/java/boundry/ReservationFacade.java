@@ -47,8 +47,8 @@ public class ReservationFacade extends AbstractFacade<Reservation> {
     public List<Reservation> findByCarAndToDate(Car car, Date toDate){
         StringBuilder sb = new StringBuilder();
         sb.append("select r from Reservation r ");
-        sb.append("where r.car_carid = :carid ");       
-        sb.append("and (:toDate between r.dateFrom and r.dateTo ");
+        sb.append("where r.carid = :carid ");       
+        sb.append("and :toDate between r.dateFrom and r.dateTo ");
         
         Query q = em.createQuery(sb.toString());
         q.setParameter("carid", car);
@@ -68,12 +68,27 @@ public class ReservationFacade extends AbstractFacade<Reservation> {
             q.setParameter("car", r.getCar());
             q.setParameter("from", r.getDateFrom());
             q.setParameter("to", r.getDateTo());
-            return q.getSingleResult() == null ? true : false;
+            return q.getFirstResult() == 0 ? true : false;
         }
         catch(Exception e){
             System.out.println("bad format of query");
             return false;
         }
+        
+    }
+
+    public void updateCar(Reservation r, Car replacment) {
+//        Query q = em.createNamedQuery("Reservation.findById");
+//        q.setParameter("id", r.getId());
+//        Reservation ret = (Reservation) q.getSingleResult();        
+//        ret.setCar(replacment);      
+        StringBuilder sb = new StringBuilder();
+        sb.append("update Reservation r set r.carid = :carid ");
+        sb.append("where r.id = :id ");
+        Query q = em.createQuery(sb.toString());
+        q.setParameter("carid", replacment);            
+        q.setParameter("id", r.getId());
+        q.executeUpdate();    
         
     }
     

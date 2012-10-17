@@ -44,6 +44,8 @@ public class ReservationView {
     @ManagedProperty(value="#{CarView}")
     private CarView carview;
     
+    private Car fakeOne;
+    
     //<editor-fold defaultstate="collapsed" desc="damage report">    
     @ManagedProperty(value="#{DamageReportView}")
     private DamageReportView drView;    
@@ -156,7 +158,7 @@ public class ReservationView {
                 }
                 else
                 {
-                    FacesContext.getCurrentInstance().addMessage("reservationMsg", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Reservation can not be created", 
+                    FacesContext.getCurrentInstance().addMessage("reservationMsg", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Reservation can not be created on those dates", 
                             "Reservation can not be created on those dates"));
                 }
 
@@ -167,25 +169,27 @@ public class ReservationView {
     }
     
     public void createDamageReport(){
+       fakeOne = carview.getById("SU71741");
        DamageReport dr = getDrView().getCurrent();
        dr.setMember_id(member.getMember());
-       dr.setCarid(this.current.getCar());
+       dr.setCarid(fakeOne);
        getDrView().create();
-       replaceDamagedCarOnReservations();
        
+       replaceDamagedCarOnReservations();       
        
     }
     
     private void replaceDamagedCarOnReservations(){
-        List<Reservation> toEdit = getFacade().findByCarAndToDate(current.getCar(), getDrView().getCurrent().getDateTo());
-        carview.getByType(current.getCar().getCarType());
+        List<Reservation> toEdit = getFacade().findByCarAndToDate(fakeOne, getDrView().getCurrent().getDateTo());
+        carview.getByTypeAndAvailable(fakeOne,getDrView().getCurrent().getDateTo());
         Car replacment = carview.getResult().get(0);
         
         Iterator i = toEdit.iterator();
         while(i.hasNext())
         {
+            
             Reservation r = (Reservation)i.next();
-            r.setCar(replacment);            
+            reservationFacade.updateCar(r,replacment);           
         }
     }
     

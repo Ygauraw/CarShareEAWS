@@ -144,6 +144,10 @@ public class CarView {
         return true;
     }
     
+    public Car getById(String id){
+        return this.carFacade.findCarById(id);
+    }
+    
     public void findInPeriod(){
         this.result = this.carFacade.findInPeriod(fromDate, toDate);        
     }
@@ -166,5 +170,9 @@ public class CarView {
                                "Model:" + ((Car) event.getSource()).getModel());
           
         FacesContext.getCurrentInstance().addMessage(null, msg);  
+    }
+
+    void getByTypeAndAvailable(Car fakeOne, Date dateTo) {
+        this.result = this.carFacade.getByTypeAndAvailable(fakeOne,dateTo);
     }
 }
